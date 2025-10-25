@@ -11,28 +11,32 @@
 
   <!-- PWA / icons -->
   <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#22c55e">
+  <meta name="theme-color" content="#10b981">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/icon-512.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+  <!-- Tailwind theme override -->
   <script>
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
           colors: {
-            primary: "#22c55e",
-            "background-light": "#f7f7f7",
-            "background-dark": "#112115",
-            "card-dark": "#1f2937",
-            "text-primary": "#111111",
-            "text-secondary": "#6b7280"
+            primary: "#10b981",                  /* emerald-500 */
+            "bg-light": "#f8fafc",               /* slate-50 */
+            "bg-dark": "#0b1220",                /* deep night */
+            "card-light": "rgba(255,255,255,0.85)",
+            "card-dark": "rgba(17,24,39,0.70)",  /* slate-900/70% */
+            ink: "#0f172a",                      /* slate-900 */
+            muted: "#64748b"                     /* slate-500 */
           },
-          fontFamily: { display: ["Inter", "sans-serif"] },
-          borderRadius: { DEFAULT: "0.75rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
-          boxShadow: { soft: "0 4px 12px rgba(0,0,0,0.05)" }
+          boxShadow: {
+            soft: "0 4px 12px rgba(2,6,23,0.06)",
+            lift: "0 8px 30px rgba(2,6,23,0.10)"
+          },
+          borderRadius: { DEFAULT: "0.75rem", lg: "1rem", xl: "1.5rem", full: "9999px" }
         }
       }
     }
@@ -40,16 +44,16 @@
 
   <style>
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
-    body{min-height:max(884px,100dvh); -webkit-tap-highlight-color: transparent}
+    body{min-height:max(884px,100dvh); -webkit-tap-highlight-color:transparent}
     input,textarea,select{font-size:16px}
     .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom) + 12px)}
   </style>
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark text-text-primary">
+<body class="font-display text-ink bg-[radial-gradient(1200px_800px_at_50%_-200px,#ecfeff_10%,#f8fafc_40%,#f1f5f9_100%)] dark:text-gray-100 dark:bg-[radial-gradient(1200px_800px_at_50%_-200px,#0b1220_0%,#0b1220_60%,#0a0f1a_100%)]">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
 
   <!-- Top App Bar -->
-  <header class="flex items-center bg-white/90 dark:bg-black/30 backdrop-blur p-3 pb-2 justify-between sticky top-0 z-10 border-b border-black/5">
+  <header class="flex items-center bg-white/60 dark:bg-black/30 backdrop-blur-xl p-3 pb-2 justify-between sticky top-0 z-10 border-b border-white/40 dark:border-white/10">
     <span class="sr-only">Top Bar</span>
     <h1 id="appTitle" class="text-base font-bold tracking-[-0.015em] text-center flex-1">Interval Walk Coach khatib</h1>
     <button id="toggleTheme" class="h-10 w-10 rounded-full grid place-items-center active:scale-95">
@@ -60,47 +64,47 @@
   <main class="flex-1">
     <!-- Screen: Manual Log -->
     <section id="screen-log" class="flex flex-col gap-4 p-4">
-      <div class="rounded-xl bg-white dark:bg-neutral-800 p-4 shadow-soft">
+      <div class="rounded-xl p-5 bg-card-light dark:bg-card-dark backdrop-blur-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-lift">
         <h2 class="text-lg font-bold mb-3">Manual Treadmill Log</h2>
 
         <form id="logForm" class="grid grid-cols-1 gap-4" autocomplete="off">
           <!-- Row 1 -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
-              <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Date</label>
+              <input type="date" id="date" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3"/>
             </div>
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
-              <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="text"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Plan name</label>
+              <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="text"/>
             </div>
           </div>
 
           <!-- Fast/Easy -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+            <div class="rounded-lg p-4 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
               <p class="font-semibold mb-2">Fast</p>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-                  <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                  <label class="text-sm text-muted dark:text-gray-300">Speed (km/h)</label>
+                  <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
                 </div>
                 <div>
-                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-                  <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                  <label class="text-sm text-muted dark:text-gray-300">Incline (%)</label>
+                  <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
                 </div>
               </div>
             </div>
-            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+            <div class="rounded-lg p-4 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
               <p class="font-semibold mb-2">Easy</p>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-                  <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                  <label class="text-sm text-muted dark:text-gray-300">Speed (km/h)</label>
+                  <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
                 </div>
                 <div>
-                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-                  <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                  <label class="text-sm text-muted dark:text-gray-300">Incline (%)</label>
+                  <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
                 </div>
               </div>
             </div>
@@ -109,63 +113,63 @@
           <!-- Durations -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
-              <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Interval length (min)</label>
+              <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
             </div>
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
-              <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Cycles</label>
+              <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
             </div>
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
-              <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Warm up + Cool down (min)</label>
+              <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
             </div>
           </div>
 
           <!-- Totals -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
-              <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Total time (min)</label>
+              <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
             </div>
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
-              <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="decimal"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Distance (km)</label>
+              <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="decimal"/>
             </div>
             <div>
-              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
-              <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+              <label class="text-sm font-medium text-muted dark:text-gray-300">Calories</label>
+              <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
             </div>
           </div>
 
           <!-- Notes -->
           <div>
-            <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
-            <textarea id="notes" rows="3" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-3"></textarea>
+            <label class="text-sm font-medium text-muted dark:text-gray-300">Notes</label>
+            <textarea id="notes" rows="3" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-slate-200 dark:border-white/10 bg-white dark:bg-neutral-900 p-3"></textarea>
           </div>
 
           <!-- Summaries -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-              <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
+            <div class="rounded-lg p-4 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 text-center backdrop-blur">
+              <p class="text-sm text-muted dark:text-gray-300">Avg. pace</p>
               <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
             </div>
-            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-              <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
+            <div class="rounded-lg p-4 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 text-center backdrop-blur">
+              <p class="text-sm text-muted dark:text-gray-300">Est. session minutes</p>
               <p id="estMinutes" class="text-2xl font-bold">0</p>
             </div>
-            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-              <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
+            <div class="rounded-lg p-4 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 text-center backdrop-blur">
+              <p class="text-sm text-muted dark:text-gray-300">Data status</p>
               <p id="dataStatus" class="text-2xl font-bold">Draft</p>
             </div>
           </div>
 
           <!-- Actions -->
           <div class="flex gap-3 justify-center pt-1">
-            <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700 active:scale-95">
+            <button type="button" id="clearBtn" class="h-12 px-6 rounded-full ring-1 ring-slate-300/70 dark:ring-white/10 hover:bg-white/60 dark:hover:bg-white/5 active:scale-95">
               Clear
             </button>
-            <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft active:scale-95">
+            <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft active:scale-95 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary/40">
               Save session
             </button>
           </div>
@@ -181,11 +185,11 @@
 
     <!-- Screen: History -->
     <section id="screen-history" class="hidden p-0">
-      <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
+      <div class="flex items-center p-4 pb-2 justify-between sticky top-0 z-10 bg-white/60 dark:bg-black/30 backdrop-blur-xl border-b border-white/40 dark:border-white/10">
         <div class="flex size-12 shrink-0 items-center justify-start"></div>
-        <h2 class="text-text-primary dark:text-gray-100 text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
+        <h2 class="text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
         <div class="flex w-12 items-center justify-end">
-          <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center text-text-primary dark:text-gray-200 active:scale-95">
+          <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center active:scale-95 ring-1 ring-slate-300/70 dark:ring-white/10 hover:bg-white/60 dark:hover:bg-white/5">
             <span class="material-symbols-outlined text-2xl">swap_vert</span>
           </button>
         </div>
@@ -196,21 +200,21 @@
   </main>
 
   <!-- Bottom Nav -->
-  <nav class="sticky bottom-0 z-10 border-t border-black/5 bg-white/90 dark:bg-black/40 backdrop-blur px-4 pt-2 safe-bottom">
+  <nav class="sticky bottom-0 z-10 border-t border-white/40 dark:border-white/10 bg-white/60 dark:bg-black/30 backdrop-blur-xl px-4 pt-2 safe-bottom">
     <div class="flex">
       <button id="navHome" class="flex flex-1 flex-col items-center justify-end gap-1 text-primary py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center" style="font-variation-settings:'FILL' 1">home</span>
         <p class="text-xs font-bold">Log</p>
       </button>
-      <button id="navHistory" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
+      <button id="navHistory" class="flex flex-1 flex-col items-center justify-end gap-1 text-muted dark:text-gray-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">history</span>
         <p class="text-xs font-medium">History</p>
       </button>
-      <button id="exportBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
+      <button id="exportBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-muted dark:text-gray-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">download</span>
         <p class="text-xs font-medium">Export</p>
       </button>
-      <button id="wipeBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
+      <button id="wipeBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-muted dark:text-gray-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">delete</span>
         <p class="text-xs font-medium">Wipe</p>
       </button>
@@ -236,9 +240,9 @@
     scrLog.classList.toggle("hidden", !isLog);
     scrHis.classList.toggle("hidden", isLog);
     navHome.classList.toggle("text-primary", isLog);
-    navHome.classList.toggle("text-text-secondary", !isLog);
+    navHome.classList.toggle("text-muted", !isLog);
     navHistory.classList.toggle("text-primary", !isLog);
-    navHistory.classList.toggle("text-text-secondary", isLog);
+    navHistory.classList.toggle("text-muted", isLog);
     appTitle.textContent = isLog ? "Interval Walk Coach khatib" : "History";
     if(!isLog) renderHistory();
     window.scrollTo({top:0, behavior:"instant"});
@@ -271,25 +275,25 @@
   const computeEstMinutes = () => {
     const interval = Number(document.getElementById("intervalMin").value || 0);
     const cycles = Number(document.getElementById("cycles").value || 0);
-    const warmCool = Number(document.getElementById("warmCool").value || 0);
-    return interval * 2 * cycles + warmCool;
+    theWarm = Number(document.getElementById("warmCool").value || 0);
+    return interval * 2 * cycles + theWarm;
   };
 
   // Recent list
   function renderRecent(){
     const data = getSessions().slice(-5).reverse();
     sessionList.innerHTML = data.length === 0
-      ? `<div class="rounded-xl p-4 bg-white dark:bg-neutral-800 text-center text-neutral-600 dark:text-neutral-300">No sessions yet</div>`
+      ? `<div class="rounded-xl p-4 bg-card-light dark:bg-card-dark backdrop-blur-xl ring-1 ring-slate-200/70 dark:ring-white/10 text-center text-muted dark:text-gray-300">No sessions yet</div>`
       : data.map(s => `
-        <div class="rounded-xl bg-white dark:bg-neutral-800 p-4 shadow-soft flex items-center justify-between">
+        <div class="rounded-xl p-4 bg-card-light dark:bg-card-dark backdrop-blur-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-soft flex items-center justify-between">
           <div class="min-w-0">
-            <p class="text-sm text-neutral-500 truncate">${new Date(s.date).toLocaleDateString()}</p>
+            <p class="text-sm text-muted truncate">${new Date(s.date).toLocaleDateString()}</p>
             <p class="text-base font-semibold truncate">${s.plan || "Unnamed plan"}</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-300 truncate">${s.totalMin} min • ${s.distanceKm} km • ${s.pace}</p>
+            <p class="text-sm text-muted dark:text-gray-300 truncate">${s.totalMin} min • ${s.distanceKm} km • ${s.pace}</p>
           </div>
           <div class="flex gap-2 shrink-0">
-            <button data-id="${s.id}" class="viewBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">View</button>
-            <button data-id="${s.id}" class="delBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">Delete</button>
+            <button data-id="${s.id}" class="viewBtn h-10 px-4 rounded-full ring-1 ring-slate-300/70 dark:ring-white/10 hover:bg-white/60 dark:hover:bg-white/5 active:scale-95">View</button>
+            <button data-id="${s.id}" class="delBtn h-10 px-4 rounded-full ring-1 ring-slate-300/70 dark:ring-white/10 hover:bg-white/60 dark:hover:bg-white/5 active:scale-95">Delete</button>
           </div>
         </div>
       `).join("");
@@ -398,11 +402,11 @@
 
     if(data.length === 0){
       historyList.innerHTML = `
-        <div class="flex flex-col items-center justify-center text-center gap-4 p-8 mt-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-          <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500">history</span>
-          <h3 class="text-text-primary dark:text-gray-200 font-bold text-lg">No sessions</h3>
-          <p class="text-text-secondary dark:text-gray-400 text-base max-w-xs">Your completed workouts will appear here.</p>
-          <button class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-bold text-white shadow-sm active:scale-95" onclick="show('log')">
+        <div class="flex flex-col items-center justify-center text-center gap-4 p-8 mt-2 rounded-xl bg-card-light dark:bg-card-dark backdrop-blur-xl ring-1 ring-slate-200/70 dark:ring-white/10">
+          <span class="material-symbols-outlined text-5xl text-muted dark:text-gray-500">history</span>
+          <h3 class="font-bold text-lg">No sessions</h3>
+          <p class="text-muted dark:text-gray-400 text-base max-w-xs">Your completed workouts will appear here.</p>
+          <button class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-bold text-white shadow-soft active:scale-95" onclick="show('log')">
             <span class="material-symbols-outlined">play_arrow</span>New session
           </button>
         </div>`;
@@ -410,34 +414,34 @@
     }
 
     historyList.innerHTML = data.map(s => `
-      <div class="flex flex-col items-stretch justify-start rounded-lg bg-white dark:bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all hover:shadow-lg">
+      <div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light dark:bg-card-dark backdrop-blur-xl ring-1 ring-slate-200/70 dark:ring-white/10 shadow-soft hover:shadow-lift transition-all">
         <div class="flex w-full grow flex-col gap-4 p-4">
           <div class="flex items-start justify-between">
             <div class="min-w-0">
-              <p class="text-text-secondary dark:text-gray-400 text-sm truncate">${new Date(s.date).toLocaleDateString()}</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold leading-tight truncate">${s.plan || "Unnamed plan"}</p>
+              <p class="text-sm text-muted truncate">${new Date(s.date).toLocaleDateString()}</p>
+              <p class="text-lg font-bold leading-tight truncate">${s.plan || "Unnamed plan"}</p>
             </div>
-            <button data-id="${s.id}" class="deleteHistory h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">Delete</button>
+            <button data-id="${s.id}" class="deleteHistory h-10 px-4 rounded-full ring-1 ring-slate-300/70 dark:ring-white/10 hover:bg-white/60 dark:hover:bg-white/5 active:scale-95">Delete</button>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Time</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.totalMin} min</p>
+            <div class="rounded-lg p-3 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
+              <p class="text-xs text-muted font-medium">Time</p>
+              <p class="text-lg font-bold">${s.totalMin} min</p>
             </div>
-            <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Distance</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.distanceKm} km</p>
+            <div class="rounded-lg p-3 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
+              <p class="text-xs text-muted font-medium">Distance</p>
+              <p class="text-lg font-bold">${s.distanceKm} km</p>
             </div>
-            <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Avg Pace</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.pace}</p>
+            <div class="rounded-lg p-3 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
+              <p class="text-xs text-muted font-medium">Avg Pace</p>
+              <p class="text-lg font-bold">${s.pace}</p>
             </div>
-            <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Calories</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.calories}</p>
+            <div class="rounded-lg p-3 bg-white/70 dark:bg-white/5 ring-1 ring-slate-200/70 dark:ring-white/10 backdrop-blur">
+              <p class="text-xs text-muted font-medium">Calories</p>
+              <p class="text-lg font-bold">${s.calories}</p>
             </div>
           </div>
-          ${s.notes ? `<p class="text-sm text-text-secondary dark:text-gray-300">Notes: ${s.notes}</p>` : ``}
+          ${s.notes ? `<p class="text-sm text-muted dark:text-gray-300">Notes: ${s.notes}</p>` : ``}
         </div>
       </div>
     `).join("");
