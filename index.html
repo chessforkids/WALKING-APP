@@ -3,7 +3,7 @@
 <html class="light" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <title>Interval Walk Coach — Manual Log + History</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
@@ -38,169 +38,181 @@
 
 <style>
   .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
-  body{min-height:max(884px,100dvh)}
+  body{min-height:max(884px,100dvh); -webkit-tap-highlight-color: transparent}
+  input,textarea,select{font-size:16px} /* elak zoom semasa menaip di sesetengah peranti */
+  .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom) + 12px)}
 </style>
 
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-text-primary">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-  <header class="flex items-center bg-transparent p-4 pb-2 justify-between sticky top-0 z-10">
-    <button id="btnBack" class="h-10 w-10 rounded-full grid place-items-center invisible">
-      <span class="material-symbols-outlined text-2xl">arrow_back</span>
-    </button>
-    <h1 id="appTitle" class="text-lg font-bold tracking-[-0.015em] text-center flex-1">Interval Walk Coach</h1>
-    <button id="toggleTheme" class="h-10 w-10 rounded-full grid place-items-center">
+  <!-- Top App Bar -->
+  <header class="flex items-center bg-white/90 dark:bg-black/30 backdrop-blur p-3 pb-2 justify-between sticky top-0 z-10 border-b border-black/5">
+    <span class="sr-only">Top Bar</span>
+    <h1 id="appTitle" class="text-base font-bold tracking-[-0.015em] text-center flex-1">Interval Walk Coach</h1>
+    <button id="toggleTheme" class="h-10 w-10 rounded-full grid place-items-center active:scale-95">
       <span class="material-symbols-outlined text-2xl">dark_mode</span>
     </button>
   </header>
 
   <main class="flex-1">
+    <!-- Screen: Manual Log -->
     <section id="screen-log" class="flex flex-col gap-4 p-4">
-      <div class="rounded-xl bg-white dark:bg-neutral-800 p-6 shadow-soft">
-        <h2 class="text-xl font-bold mb-4">Manual Treadmill Log</h2>
+      <div class="rounded-xl bg-white dark:bg-neutral-800 p-4 shadow-soft">
+        <h2 class="text-lg font-bold mb-3">Manual Treadmill Log</h2>
 
 ```
-<form id="logForm" class="grid grid-cols-1 gap-4">
-  <div class="grid grid-cols-2 gap-4">
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
-      <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
-      <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-2 gap-4">
-    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-      <p class="font-semibold mb-2">Fast</p>
-      <div class="grid grid-cols-2 gap-3">
+    <form id="logForm" class="grid grid-cols-1 gap-4" autocomplete="off">
+      <!-- Row 1 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-          <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
+          <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3"/>
         </div>
         <div>
-          <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-          <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
+          <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="text"/>
         </div>
       </div>
-    </div>
-    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-      <p class="font-semibold mb-2">Easy</p>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-          <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
+
+      <!-- Fast/Easy -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+          <p class="font-semibold mb-2">Fast</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+              <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+            </div>
+            <div>
+              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+              <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+            </div>
+          </div>
         </div>
-        <div>
-          <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-          <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
+        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+          <p class="font-semibold mb-2">Easy</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+              <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+            </div>
+            <div>
+              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+              <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- Durations -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
+          <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+        </div>
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
+          <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+        </div>
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
+          <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+        </div>
+      </div>
+
+      <!-- Totals -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
+          <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+        </div>
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
+          <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="decimal"/>
+        </div>
+        <div>
+          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
+          <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div>
+        <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
+        <textarea id="notes" rows="3" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-3"></textarea>
+      </div>
+
+      <!-- Summaries -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+          <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
+          <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
+        </div>
+        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+          <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
+          <p id="estMinutes" class="text-2xl font-bold">0</p>
+        </div>
+        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+          <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
+          <p id="dataStatus" class="text-2xl font-bold">Draft</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-3 justify-center pt-1">
+        <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700 active:scale-95">
+          Clear
+        </button>
+        <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft active:scale-95">
+          Save session
+        </button>
+      </div>
+    </form>
   </div>
 
-  <div class="grid grid-cols-3 gap-4">
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
-      <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
-      <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
-      <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-3 gap-4">
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
-      <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
-      <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-    <div>
-      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
-      <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-    </div>
-  </div>
-
-  <div>
-    <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
-    <textarea id="notes" rows="2" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"></textarea>
-  </div>
-
-  <div class="grid grid-cols-3 gap-4">
-    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-      <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
-      <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
-    </div>
-    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-      <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
-      <p id="estMinutes" class="text-2xl font-bold">0</p>
-    </div>
-    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-      <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
-      <p id="dataStatus" class="text-2xl font-bold">Draft</p>
-    </div>
-  </div>
-
-  <div class="flex gap-3 justify-center">
-    <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700">
-      Clear
-    </button>
-    <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft">
-      Save session
-    </button>
-  </div>
-</form>
-```
-
-  </div>
-
+  <!-- Recent -->
   <section class="flex flex-col gap-3">
     <h3 class="text-base font-bold">Recent sessions</h3>
     <div id="sessionList" class="grid gap-3"></div>
   </section>
 </section>
 
+<!-- Screen: History -->
 <section id="screen-history" class="hidden p-0">
   <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
     <div class="flex size-12 shrink-0 items-center justify-start"></div>
-    <h2 class="text-text-primary dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
+    <h2 class="text-text-primary dark:text-gray-100 text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
     <div class="flex w-12 items-center justify-end">
-      <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center text-text-primary dark:text-gray-200">
-        <span class="material-symbols-outlined text-2xl">tune</span>
+      <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center text-text-primary dark:text-gray-200 active:scale-95">
+        <span class="material-symbols-outlined text-2xl">swap_vert</span>
       </button>
     </div>
   </div>
 
-  <main class="px-4 pt-4 pb-24 space-y-4" id="historyList">
-  </main>
+  <main class="px-4 pt-4 pb-24 space-y-4" id="historyList"></main>
 </section>
+```
+
   </main>
 
-  <nav class="sticky bottom-0 z-10 border-t border-black/5 bg-white/90 dark:bg-black/40 backdrop-blur px-4 pb-3 pt-2">
+  <!-- Bottom Nav -->
+
+  <nav class="sticky bottom-0 z-10 border-t border-black/5 bg-white/90 dark:bg-black/40 backdrop-blur px-4 pt-2 safe-bottom">
     <div class="flex">
-      <button id="navHome" class="flex flex-1 flex-col items-center justify-end gap-1 text-primary">
+      <button id="navHome" class="flex flex-1 flex-col items-center justify-end gap-1 text-primary py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center" style="font-variation-settings:'FILL' 1">home</span>
         <p class="text-xs font-bold">Log</p>
       </button>
-      <button id="navHistory" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400">
+      <button id="navHistory" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">history</span>
         <p class="text-xs font-medium">History</p>
       </button>
-      <button id="exportBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400">
+      <button id="exportBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">download</span>
         <p class="text-xs font-medium">Export</p>
       </button>
-      <button id="wipeBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400">
+      <button id="wipeBtn" class="flex flex-1 flex-col items-center justify-end gap-1 text-text-secondary dark:text-neutral-400 py-2 active:scale-95">
         <span class="material-symbols-outlined flex h-8 items-center justify-center">delete</span>
         <p class="text-xs font-medium">Wipe</p>
       </button>
@@ -209,10 +221,12 @@
 </div>
 
 <script>
+  // Theme
   document.getElementById("toggleTheme").addEventListener("click", () => {
     document.documentElement.classList.toggle("dark");
   });
 
+  // Router
   const scrLog = document.getElementById("screen-log");
   const scrHis = document.getElementById("screen-history");
   const navHome = document.getElementById("navHome");
@@ -229,14 +243,17 @@
     navHistory.classList.toggle("text-text-secondary", isLog);
     appTitle.textContent = isLog ? "Interval Walk Coach" : "History";
     if(!isLog) renderHistory();
+    window.scrollTo({top:0, behavior:"instant"});
   }
   navHome.addEventListener("click", () => show("log"));
   navHistory.addEventListener("click", () => show("history"));
 
+  // Storage
   const KEY = "iwc_sessions";
   const getSessions = () => JSON.parse(localStorage.getItem(KEY) || "[]");
   const setSessions = arr => localStorage.setItem(KEY, JSON.stringify(arr));
 
+  // Elements
   const form = document.getElementById("logForm");
   const totalMin = document.getElementById("totalMin");
   const distanceKm = document.getElementById("distanceKm");
@@ -245,6 +262,7 @@
   const dataStatus = document.getElementById("dataStatus");
   const sessionList = document.getElementById("sessionList");
 
+  // Helpers
   function mmssPerKm(minutes, km){
     if(!minutes || !km || km <= 0) return "--:-- /km";
     const sec = Math.round((minutes / km) * 60);
@@ -259,20 +277,21 @@
     return interval * 2 * cycles + warmCool;
   }
 
+  // Recent list
   function renderRecent(){
     const data = getSessions().slice(-5).reverse();
     sessionList.innerHTML = data.length === 0
       ? `<div class="rounded-xl p-4 bg-white dark:bg-neutral-800 text-center text-neutral-600 dark:text-neutral-300">No sessions yet</div>`
       : data.map(s => `
         <div class="rounded-xl bg-white dark:bg-neutral-800 p-4 shadow-soft flex items-center justify-between">
-          <div>
-            <p class="text-sm text-neutral-500">${new Date(s.date).toLocaleDateString()}</p>
-            <p class="text-base font-semibold">${s.plan || "Unnamed plan"}</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-300">${s.totalMin} min • ${s.distanceKm} km • ${s.pace}</p>
+          <div class="min-w-0">
+            <p class="text-sm text-neutral-500 truncate">${new Date(s.date).toLocaleDateString()}</p>
+            <p class="text-base font-semibold truncate">${s.plan || "Unnamed plan"}</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-300 truncate">${s.totalMin} min • ${s.distanceKm} km • ${s.pace}</p>
           </div>
-          <div class="flex gap-2">
-            <button data-id="${s.id}" class="viewBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700">View</button>
-            <button data-id="${s.id}" class="delBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700">Delete</button>
+          <div class="flex gap-2 shrink-0">
+            <button data-id="${s.id}" class="viewBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">View</button>
+            <button data-id="${s.id}" class="delBtn h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">Delete</button>
           </div>
         </div>
       `).join("");
@@ -286,12 +305,11 @@
       });
     });
     document.querySelectorAll(".viewBtn").forEach(b => {
-      b.addEventListener("click", () => {
-        show("history");
-      });
+      b.addEventListener("click", () => show("history"));
     });
   }
 
+  // Live calculations
   function updateDerived(){
     paceOut.textContent = mmssPerKm(Number(totalMin.value), Number(distanceKm.value));
     estMinutes.textContent = computeEstMinutes();
@@ -312,12 +330,14 @@
     document.getElementById("warmCool").addEventListener(evt, updateDerived);
   });
 
+  // Clear
   document.getElementById("clearBtn").addEventListener("click", () => {
     form.reset();
     initDefaults();
     updateDerived();
   });
 
+  // Save
   form.addEventListener("submit", e => {
     e.preventDefault();
     const payload = {
@@ -347,8 +367,10 @@
     renderRecent();
     renderHistory();
     dataStatus.textContent = "Saved";
+    window.scrollTo({top:0, behavior:"smooth"});
   });
 
+  // Export / Wipe
   function exportJSON() {
     const data = JSON.stringify(getSessions());
     const blob = new Blob([data], {type:'application/json'});
@@ -367,6 +389,7 @@
     }
   });
 
+  // History
   const historyList = document.getElementById("historyList");
   let sortMode = "date_desc";
   document.getElementById("sortBtn").addEventListener("click", () => {
@@ -386,7 +409,7 @@
           <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500">history</span>
           <h3 class="text-text-primary dark:text-gray-200 font-bold text-lg">No sessions</h3>
           <p class="text-text-secondary dark:text-gray-400 text-base max-w-xs">Your completed workouts will appear here.</p>
-          <button class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-bold text-white shadow-sm" onclick="show('log')">
+          <button class="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-bold text-white shadow-sm active:scale-95" onclick="show('log')">
             <span class="material-symbols-outlined">play_arrow</span>New session
           </button>
         </div>`;
@@ -397,28 +420,28 @@
       <div class="flex flex-col items-stretch justify-start rounded-lg bg-white dark:bg-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all hover:shadow-lg">
         <div class="flex w-full grow flex-col gap-4 p-4">
           <div class="flex items-start justify-between">
-            <div>
-              <p class="text-text-secondary dark:text-gray-400 text-sm">${new Date(s.date).toLocaleDateString()}</p>
-              <p class="text-text-primary dark:text-gray-100 text-lg font-bold leading-tight">${s.plan || "Unnamed plan"}</p>
+            <div class="min-w-0">
+              <p class="text-text-secondary dark:text-gray-400 text-sm truncate">${new Date(s.date).toLocaleDateString()}</p>
+              <p class="text-text-primary dark:text-gray-100 text-lg font-bold leading-tight truncate">${s.plan || "Unnamed plan"}</p>
             </div>
-            <button data-id="${s.id}" class="deleteHistory h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700">Delete</button>
+            <button data-id="${s.id}" class="deleteHistory h-10 px-4 rounded-full border border-neutral-300 dark:border-neutral-700 active:scale-95">Delete</button>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Time</p>
-              <p class="text-text-primary dark:text-gray-100 text-xl font-bold">${s.totalMin} min</p>
+              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Time</p>
+              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.totalMin} min</p>
             </div>
             <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Distance</p>
-              <p class="text-text-primary dark:text-gray-100 text-xl font-bold">${s.distanceKm} km</p>
+              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Distance</p>
+              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.distanceKm} km</p>
             </div>
             <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Avg Pace</p>
-              <p class="text-text-primary dark:text-gray-100 text-xl font-bold">${s.pace}</p>
+              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Avg Pace</p>
+              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.pace}</p>
             </div>
             <div class="rounded-DEFAULT p-3 bg-background-light dark:bg-background-dark/80">
-              <p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Calories</p>
-              <p class="text-text-primary dark:text-gray-100 text-xl font-bold">${s.calories}</p>
+              <p class="text-text-secondary dark:text-gray-400 text-xs font-medium">Calories</p>
+              <p class="text-text-primary dark:text-gray-100 text-lg font-bold">${s.calories}</p>
             </div>
           </div>
           ${s.notes ? `<p class="text-sm text-text-secondary dark:text-gray-300">Notes: ${s.notes}</p>` : ``}
@@ -437,6 +460,7 @@
     });
   }
 
+  // Init
   function initDefaults(){
     document.getElementById("date").value = new Date().toISOString().slice(0,10);
     document.getElementById("intervalMin").value = 3;
@@ -444,15 +468,55 @@
     document.getElementById("warmCool").value = 6;
   }
   initDefaults();
-  updateDerived();
-  renderRecent();
-  show("log");
+  function updateDerived(){ /* redefined after init for hoist safety */ }
+  // reattach handlers again with latest refs
 </script>
 
 <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").catch(console.error);
-}
+  // keep SW registration last
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(console.error);
+  }
+</script>
+
+<script>
+  // redefine updateDerived after all inputs exist
+  const totalMinEl = document.getElementById("totalMin");
+  const distanceKmEl = document.getElementById("distanceKm");
+  const paceOutEl = document.getElementById("paceOut");
+  const estMinutesEl = document.getElementById("estMinutes");
+  const dataStatusEl = document.getElementById("dataStatus");
+
+  function mmss(minutes, km){
+    if(!minutes || !km || km <= 0) return "--:-- /km";
+    const sec = Math.round((minutes / km) * 60);
+    const m = Math.floor(sec/60);
+    const s = String(sec % 60).padStart(2,"0");
+    return `${m}:${s} /km`;
+  }
+  function derived(){
+    paceOutEl.textContent = mmss(Number(totalMinEl.value), Number(distanceKmEl.value));
+    const interval = Number(document.getElementById("intervalMin").value || 0);
+    const cycles = Number(document.getElementById("cycles").value || 0);
+    const warmCool = Number(document.getElementById("warmCool").value || 0);
+    const est = interval * 2 * cycles + warmCool;
+    estMinutesEl.textContent = est;
+    const act = Number(totalMinEl.value || 0);
+    dataStatusEl.textContent = act && est ? (Math.abs(act - est) <= 2 ? "OK" : "Check time") : "Draft";
+  }
+  ["input","change"].forEach(evt=>{
+    ["totalMin","distanceKm","intervalMin","cycles","warmCool"].forEach(id=>{
+      document.getElementById(id).addEventListener(evt, derived);
+    });
+  });
+  derived();
+
+  // first render
+  (function start(){
+    // reuse earlier functions
+    renderRecent();
+    show("log");
+  })();
 </script>
 
 </body>
