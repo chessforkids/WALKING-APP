@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>Interval Walk Coach — Manual Log + History</title>
+<title>Interval Walk Coach khatib — Manual Log + History</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
@@ -49,7 +49,7 @@
   <!-- Top App Bar -->
   <header class="flex items-center bg-white/90 dark:bg-black/30 backdrop-blur p-3 pb-2 justify-between sticky top-0 z-10 border-b border-black/5">
     <span class="sr-only">Top Bar</span>
-    <h1 id="appTitle" class="text-base font-bold tracking-[-0.015em] text-center flex-1">Interval Walk Coach</h1>
+    <h1 id="appTitle" class="text-base font-bold tracking-[-0.015em] text-center flex-1">Interval Walk Coach khatib</h1>
     <button id="toggleTheme" class="h-10 w-10 rounded-full grid place-items-center active:scale-95">
       <span class="material-symbols-outlined text-2xl">dark_mode</span>
     </button>
@@ -241,7 +241,7 @@
     navHome.classList.toggle("text-text-secondary", !isLog);
     navHistory.classList.toggle("text-primary", !isLog);
     navHistory.classList.toggle("text-text-secondary", isLog);
-    appTitle.textContent = isLog ? "Interval Walk Coach" : "History";
+    appTitle.textContent = isLog ? "Interval Walk Coach khatib" : "History";
     if(!isLog) renderHistory();
     window.scrollTo({top:0, behavior:"instant"});
   }
@@ -521,5 +521,6 @@
 
 </body>
 </html>
+
 
 
