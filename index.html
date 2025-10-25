@@ -8,6 +8,13 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#22c55e">
+<link rel="apple-touch-icon" href="icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <script>
   tailwind.config = {
     darkMode: "class",
@@ -28,14 +35,15 @@
     }
   }
 </script>
+
 <style>
   .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
   body{min-height:max(884px,100dvh)}
 </style>
+
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-text-primary">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-  <!-- Top App Bar -->
   <header class="flex items-center bg-transparent p-4 pb-2 justify-between sticky top-0 z-10">
     <button id="btnBack" class="h-10 w-10 rounded-full grid place-items-center invisible">
       <span class="material-symbols-outlined text-2xl">arrow_back</span>
@@ -46,115 +54,114 @@
     </button>
   </header>
 
-  <!-- Screens -->
-
   <main class="flex-1">
-    <!-- Screen: Manual Log -->
     <section id="screen-log" class="flex flex-col gap-4 p-4">
       <div class="rounded-xl bg-white dark:bg-neutral-800 p-6 shadow-soft">
         <h2 class="text-xl font-bold mb-4">Manual Treadmill Log</h2>
 
+```
+<form id="logForm" class="grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
+      <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
+      <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+  </div>
 
-    <form id="logForm" class="grid grid-cols-1 gap-4">
-      <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+      <p class="font-semibold mb-2">Fast</p>
+      <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
-          <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+          <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+          <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
         </div>
         <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
-          <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+          <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+          <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
         </div>
       </div>
-
-      <div class="grid grid-cols-2 gap-4">
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-          <p class="font-semibold mb-2">Fast</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-              <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-              <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
-            </div>
-          </div>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-          <p class="font-semibold mb-2">Easy</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-              <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-              <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 gap-4">
+    </div>
+    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+      <p class="font-semibold mb-2">Easy</p>
+      <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
-          <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+          <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+          <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
         </div>
         <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
-          <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
-          <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+          <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+          <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950"/>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="grid grid-cols-3 gap-4">
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
-          <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
-          <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
-          <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
-        </div>
-      </div>
+  <div class="grid grid-cols-3 gap-4">
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
+      <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
+      <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
+      <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+  </div>
 
-      <div>
-        <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
-        <textarea id="notes" rows="2" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"></textarea>
-      </div>
+  <div class="grid grid-cols-3 gap-4">
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
+      <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
+      <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+    <div>
+      <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
+      <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"/>
+    </div>
+  </div>
 
-      <div class="grid grid-cols-3 gap-4">
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
-          <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
-          <p id="estMinutes" class="text-2xl font-bold">0</p>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
-          <p id="dataStatus" class="text-2xl font-bold">Draft</p>
-        </div>
-      </div>
+  <div>
+    <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
+    <textarea id="notes" rows="2" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"></textarea>
+  </div>
 
-      <div class="flex gap-3 justify-center">
-        <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700">
-          Clear
-        </button>
-        <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft">
-          Save session
-        </button>
-      </div>
-    </form>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+      <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
+      <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
+    </div>
+    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+      <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
+      <p id="estMinutes" class="text-2xl font-bold">0</p>
+    </div>
+    <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+      <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
+      <p id="dataStatus" class="text-2xl font-bold">Draft</p>
+    </div>
+  </div>
+
+  <div class="flex gap-3 justify-center">
+    <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700">
+      Clear
+    </button>
+    <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft">
+      Save session
+    </button>
+  </div>
+</form>
+```
+
   </div>
 
   <section class="flex flex-col gap-3">
@@ -163,7 +170,6 @@
   </section>
 </section>
 
-<!-- Screen: History -->
 <section id="screen-history" class="hidden p-0">
   <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
     <div class="flex size-12 shrink-0 items-center justify-start"></div>
@@ -176,14 +182,9 @@
   </div>
 
   <main class="px-4 pt-4 pb-24 space-y-4" id="historyList">
-    <!-- Filled by JS -->
   </main>
 </section>
-
-
   </main>
-
-  <!-- Bottom Nav -->
 
   <nav class="sticky bottom-0 z-10 border-t border-black/5 bg-white/90 dark:bg-black/40 backdrop-blur px-4 pb-3 pt-2">
     <div class="flex">
@@ -208,12 +209,10 @@
 </div>
 
 <script>
-  // Theme
   document.getElementById("toggleTheme").addEventListener("click", () => {
     document.documentElement.classList.toggle("dark");
   });
 
-  // Router
   const scrLog = document.getElementById("screen-log");
   const scrHis = document.getElementById("screen-history");
   const navHome = document.getElementById("navHome");
@@ -234,12 +233,10 @@
   navHome.addEventListener("click", () => show("log"));
   navHistory.addEventListener("click", () => show("history"));
 
-  // Storage helpers
   const KEY = "iwc_sessions";
   const getSessions = () => JSON.parse(localStorage.getItem(KEY) || "[]");
   const setSessions = arr => localStorage.setItem(KEY, JSON.stringify(arr));
 
-  // Elements for Log
   const form = document.getElementById("logForm");
   const totalMin = document.getElementById("totalMin");
   const distanceKm = document.getElementById("distanceKm");
@@ -248,7 +245,6 @@
   const dataStatus = document.getElementById("dataStatus");
   const sessionList = document.getElementById("sessionList");
 
-  // Helpers
   function mmssPerKm(minutes, km){
     if(!minutes || !km || km <= 0) return "--:-- /km";
     const sec = Math.round((minutes / km) * 60);
@@ -263,7 +259,6 @@
     return interval * 2 * cycles + warmCool;
   }
 
-  // Recent list under Log
   function renderRecent(){
     const data = getSessions().slice(-5).reverse();
     sessionList.innerHTML = data.length === 0
@@ -297,7 +292,6 @@
     });
   }
 
-  // Live calculations
   function updateDerived(){
     paceOut.textContent = mmssPerKm(Number(totalMin.value), Number(distanceKm.value));
     estMinutes.textContent = computeEstMinutes();
@@ -318,14 +312,12 @@
     document.getElementById("warmCool").addEventListener(evt, updateDerived);
   });
 
-  // Clear
   document.getElementById("clearBtn").addEventListener("click", () => {
     form.reset();
     initDefaults();
     updateDerived();
   });
 
-  // Save
   form.addEventListener("submit", e => {
     e.preventDefault();
     const payload = {
@@ -357,7 +349,6 @@
     dataStatus.textContent = "Saved";
   });
 
-  // Export
   function exportJSON() {
     const data = JSON.stringify(getSessions());
     const blob = new Blob([data], {type:'application/json'});
@@ -368,7 +359,6 @@
   }
   document.getElementById("exportBtn").addEventListener("click", exportJSON);
 
-  // Wipe
   document.getElementById("wipeBtn").addEventListener("click", () => {
     if(confirm("Padam semua sesi?")){
       setSessions([]);
@@ -377,7 +367,6 @@
     }
   });
 
-  // History rendering
   const historyList = document.getElementById("historyList");
   let sortMode = "date_desc";
   document.getElementById("sortBtn").addEventListener("click", () => {
@@ -448,7 +437,6 @@
     });
   }
 
-  // Init
   function initDefaults(){
     document.getElementById("date").value = new Date().toISOString().slice(0,10);
     document.getElementById("intervalMin").value = 3;
@@ -461,6 +449,12 @@
   show("log");
 </script>
 
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").catch(console.error);
+}
+</script>
+
 </body>
 </html>
-
+::contentReference[oaicite:0]{index=0}
