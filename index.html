@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>Interval Walk Coach khatib — Manual Log + History</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Interval Walk Coach khatib — Manual Log + History</title>
 
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#22c55e">
-<link rel="apple-touch-icon" href="icon-512.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 
-<script>
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          primary: "#22c55e",
-          "background-light": "#f7f7f7",
-          "background-dark": "#112115",
-          "card-dark": "#1f2937",
-          "text-primary": "#111111",
-          "text-secondary": "#6b7280"
-        },
-        fontFamily: { display: ["Inter", "sans-serif"] },
-        borderRadius: { DEFAULT: "0.75rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
-        boxShadow: { soft: "0 4px 12px rgba(0,0,0,0.05)" }
+  <!-- PWA / icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#22c55e">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#22c55e",
+            "background-light": "#f7f7f7",
+            "background-dark": "#112115",
+            "card-dark": "#1f2937",
+            "text-primary": "#111111",
+            "text-secondary": "#6b7280"
+          },
+          fontFamily: { display: ["Inter", "sans-serif"] },
+          borderRadius: { DEFAULT: "0.75rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+          boxShadow: { soft: "0 4px 12px rgba(0,0,0,0.05)" }
+        }
       }
     }
-  }
-</script>
+  </script>
 
-<style>
-  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
-  body{min-height:max(884px,100dvh); -webkit-tap-highlight-color: transparent}
-  input,textarea,select{font-size:16px} /* elak zoom semasa menaip di sesetengah peranti */
-  .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom) + 12px)}
-</style>
-
+  <style>
+    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+    body{min-height:max(884px,100dvh); -webkit-tap-highlight-color: transparent}
+    input,textarea,select{font-size:16px}
+    .safe-bottom{padding-bottom:calc(env(safe-area-inset-bottom) + 12px)}
+  </style>
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-text-primary">
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+
   <!-- Top App Bar -->
   <header class="flex items-center bg-white/90 dark:bg-black/30 backdrop-blur p-3 pb-2 justify-between sticky top-0 z-10 border-b border-black/5">
     <span class="sr-only">Top Bar</span>
@@ -61,143 +63,139 @@
       <div class="rounded-xl bg-white dark:bg-neutral-800 p-4 shadow-soft">
         <h2 class="text-lg font-bold mb-3">Manual Treadmill Log</h2>
 
-
-    <form id="logForm" class="grid grid-cols-1 gap-4" autocomplete="off">
-      <!-- Row 1 -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
-          <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
-          <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="text"/>
-        </div>
-      </div>
-
-      <!-- Fast/Easy -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-          <p class="font-semibold mb-2">Fast</p>
-          <div class="grid grid-cols-2 gap-3">
+        <form id="logForm" class="grid grid-cols-1 gap-4" autocomplete="off">
+          <!-- Row 1 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-              <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Date</label>
+              <input type="date" id="date" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3"/>
             </div>
             <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-              <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Plan name</label>
+              <input type="text" id="plan" placeholder="Foundation, Hills Light" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="text"/>
             </div>
           </div>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
-          <p class="font-semibold mb-2">Easy</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
-              <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+
+          <!-- Fast/Easy -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+              <p class="font-semibold mb-2">Fast</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+                  <input type="number" step="0.1" id="fastKmh" placeholder="5.2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                </div>
+                <div>
+                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+                  <input type="number" step="0.5" id="fastInc" placeholder="2" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                </div>
+              </div>
             </div>
-            <div>
-              <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
-              <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900">
+              <p class="font-semibold mb-2">Easy</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Speed (km/h)</label>
+                  <input type="number" step="0.1" id="easyKmh" placeholder="4.0" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                </div>
+                <div>
+                  <label class="text-sm text-neutral-600 dark:text-neutral-300">Incline (%)</label>
+                  <input type="number" step="0.5" id="easyInc" placeholder="1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-950 h-12 px-3" inputmode="decimal"/>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- Durations -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
+              <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
+              <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
+              <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+            </div>
+          </div>
+
+          <!-- Totals -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
+              <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
+              <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="decimal"/>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
+              <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
+            <textarea id="notes" rows="3" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-3"></textarea>
+          </div>
+
+          <!-- Summaries -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+              <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
+              <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
+            </div>
+            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+              <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
+              <p id="estMinutes" class="text-2xl font-bold">0</p>
+            </div>
+            <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+              <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
+              <p id="dataStatus" class="text-2xl font-bold">Draft</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-3 justify-center pt-1">
+            <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700 active:scale-95">
+              Clear
+            </button>
+            <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft active:scale-95">
+              Save session
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Recent -->
+      <section class="flex flex-col gap-3">
+        <h3 class="text-base font-bold">Recent sessions</h3>
+        <div id="sessionList" class="grid gap-3"></div>
+      </section>
+    </section>
+
+    <!-- Screen: History -->
+    <section id="screen-history" class="hidden p-0">
+      <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex size-12 shrink-0 items-center justify-start"></div>
+        <h2 class="text-text-primary dark:text-gray-100 text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
+        <div class="flex w-12 items-center justify-end">
+          <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center text-text-primary dark:text-gray-200 active:scale-95">
+            <span class="material-symbols-outlined text-2xl">swap_vert</span>
+          </button>
         </div>
       </div>
 
-      <!-- Durations -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Interval length (min)</label>
-          <input type="number" id="intervalMin" step="1" placeholder="3" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Cycles</label>
-          <input type="number" id="cycles" step="1" placeholder="5" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Warm up + Cool down (min)</label>
-          <input type="number" id="warmCool" step="1" placeholder="6" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
-        </div>
-      </div>
-
-      <!-- Totals -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Total time (min)</label>
-          <input type="number" id="totalMin" step="1" placeholder="36" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Distance (km)</label>
-          <input type="number" id="distanceKm" step="0.01" placeholder="2.1" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="decimal"/>
-        </div>
-        <div>
-          <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Calories</label>
-          <input type="number" id="calories" step="1" placeholder="120" class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 h-12 px-3" inputmode="numeric"/>
-        </div>
-      </div>
-
-      <!-- Notes -->
-      <div>
-        <label class="text-sm font-medium text-neutral-600 dark:text-neutral-300">Notes</label>
-        <textarea id="notes" rows="3" placeholder="Felt good. Bumped fast pace last 2 cycles." class="mt-1 w-full rounded-lg border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-3"></textarea>
-      </div>
-
-      <!-- Summaries -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Avg. pace</p>
-          <p id="paceOut" class="text-2xl font-bold">--:-- /km</p>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Est. session minutes</p>
-          <p id="estMinutes" class="text-2xl font-bold">0</p>
-        </div>
-        <div class="rounded-lg p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <p class="text-sm text-neutral-600 dark:text-neutral-300">Data status</p>
-          <p id="dataStatus" class="text-2xl font-bold">Draft</p>
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex gap-3 justify-center pt-1">
-        <button type="button" id="clearBtn" class="h-12 px-6 rounded-full border-2 border-neutral-200 dark:border-neutral-700 active:scale-95">
-          Clear
-        </button>
-        <button type="submit" class="h-12 px-8 rounded-full bg-primary text-white font-bold shadow-soft active:scale-95">
-          Save session
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Recent -->
-  <section class="flex flex-col gap-3">
-    <h3 class="text-base font-bold">Recent sessions</h3>
-    <div id="sessionList" class="grid gap-3"></div>
-  </section>
-</section>
-
-<!-- Screen: History -->
-<section id="screen-history" class="hidden p-0">
-  <div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
-    <div class="flex size-12 shrink-0 items-center justify-start"></div>
-    <h2 class="text-text-primary dark:text-gray-100 text-base font-bold leading-tight tracking-[-0.015em] flex-1 text-center">History</h2>
-    <div class="flex w-12 items-center justify-end">
-      <button id="sortBtn" class="h-10 w-10 rounded-full grid place-items-center text-text-primary dark:text-gray-200 active:scale-95">
-        <span class="material-symbols-outlined text-2xl">swap_vert</span>
-      </button>
-    </div>
-  </div>
-
-  <main class="px-4 pt-4 pb-24 space-y-4" id="historyList"></main>
-</section>
-
-
+      <main class="px-4 pt-4 pb-24 space-y-4" id="historyList"></main>
+    </section>
   </main>
 
   <!-- Bottom Nav -->
-
   <nav class="sticky bottom-0 z-10 border-t border-black/5 bg-white/90 dark:bg-black/40 backdrop-blur px-4 pt-2 safe-bottom">
     <div class="flex">
       <button id="navHome" class="flex flex-1 flex-col items-center justify-end gap-1 text-primary py-2 active:scale-95">
@@ -263,19 +261,19 @@
   const sessionList = document.getElementById("sessionList");
 
   // Helpers
-  function mmssPerKm(minutes, km){
+  const mmssPerKm = (minutes, km) => {
     if(!minutes || !km || km <= 0) return "--:-- /km";
     const sec = Math.round((minutes / km) * 60);
     const m = Math.floor(sec/60);
     const s = String(sec % 60).padStart(2,"0");
     return `${m}:${s} /km`;
-  }
-  function computeEstMinutes(){
+  };
+  const computeEstMinutes = () => {
     const interval = Number(document.getElementById("intervalMin").value || 0);
     const cycles = Number(document.getElementById("cycles").value || 0);
     const warmCool = Number(document.getElementById("warmCool").value || 0);
     return interval * 2 * cycles + warmCool;
-  }
+  };
 
   // Recent list
   function renderRecent(){
@@ -315,12 +313,7 @@
     estMinutes.textContent = computeEstMinutes();
     const est = Number(estMinutes.textContent);
     const act = Number(totalMin.value || 0);
-    if(act && est){
-      const diff = Math.abs(act - est);
-      dataStatus.textContent = diff <= 2 ? "OK" : "Check time";
-    }else{
-      dataStatus.textContent = "Draft";
-    }
+    dataStatus.textContent = act && est ? (Math.abs(act - est) <= 2 ? "OK" : "Check time") : "Draft";
   }
   ["input","change"].forEach(evt => {
     totalMin.addEventListener(evt, updateDerived);
@@ -468,59 +461,16 @@
     document.getElementById("warmCool").value = 6;
   }
   initDefaults();
-  function updateDerived(){ /* redefined after init for hoist safety */ }
-  // reattach handlers again with latest refs
+  updateDerived();
+  renderRecent();
+  show("log");
 </script>
 
 <script>
-  // keep SW registration last
+  // SW registration last
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(console.error);
   }
 </script>
-
-<script>
-  // redefine updateDerived after all inputs exist
-  const totalMinEl = document.getElementById("totalMin");
-  const distanceKmEl = document.getElementById("distanceKm");
-  const paceOutEl = document.getElementById("paceOut");
-  const estMinutesEl = document.getElementById("estMinutes");
-  const dataStatusEl = document.getElementById("dataStatus");
-
-  function mmss(minutes, km){
-    if(!minutes || !km || km <= 0) return "--:-- /km";
-    const sec = Math.round((minutes / km) * 60);
-    const m = Math.floor(sec/60);
-    const s = String(sec % 60).padStart(2,"0");
-    return `${m}:${s} /km`;
-  }
-  function derived(){
-    paceOutEl.textContent = mmss(Number(totalMinEl.value), Number(distanceKmEl.value));
-    const interval = Number(document.getElementById("intervalMin").value || 0);
-    const cycles = Number(document.getElementById("cycles").value || 0);
-    const warmCool = Number(document.getElementById("warmCool").value || 0);
-    const est = interval * 2 * cycles + warmCool;
-    estMinutesEl.textContent = est;
-    const act = Number(totalMinEl.value || 0);
-    dataStatusEl.textContent = act && est ? (Math.abs(act - est) <= 2 ? "OK" : "Check time") : "Draft";
-  }
-  ["input","change"].forEach(evt=>{
-    ["totalMin","distanceKm","intervalMin","cycles","warmCool"].forEach(id=>{
-      document.getElementById(id).addEventListener(evt, derived);
-    });
-  });
-  derived();
-
-  // first render
-  (function start(){
-    // reuse earlier functions
-    renderRecent();
-    show("log");
-  })();
-</script>
-
 </body>
 </html>
-
-
-
